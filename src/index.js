@@ -194,6 +194,7 @@ export default {
     const rawText = parsedEmail.text || "";
     const latestReply = stripQuotedText(rawText);
     let userText = latestReply || rawText.trim();
+    console.log("user text:", userText);
 
 
     // 3. Extract Inbound Attachments
@@ -272,6 +273,7 @@ export default {
 
     // 9. Build Threaded MIME Reply
     const replySubject = /^re:/i.test(rawSubject) ? rawSubject : `Re: ${rawSubject}`;
+    console.log("reply subject:", replySubject);
     const msg = createMimeMessage();
     msg.setSender({ name: `AI Assistant (${threadState.provider})`, addr: recipient });
     msg.setRecipient(sender);
@@ -309,6 +311,7 @@ export default {
     } else {
       msg.addMessage({
         contentType: "text/plain",
+        console.log("reply body text", replyBody);
         data: replyBody,
       });
     }
