@@ -1,7 +1,7 @@
 import { EmailMessage } from "cloudflare:email";
 import { createMimeMessage } from "mimetext";
 import PostalMime from "postal-mime";
-import EmailReplyParser from "email-reply-parser";
+// import EmailReplyParser from "email-reply-parser";
 
 const ALLOWED_SENDER = "you@yourdomain.com"; // Replace with your email address
 const SYSTEM_PROMPT = "You are a helpful email assistant. Keep replies clear and concise.";
@@ -57,6 +57,23 @@ function extractAttachments(attachments = []) {
 
   return { textAttachments, binaryAttachments };
 }
+
+function stripQuotedText(text) {
+  return text
+    // Strip "On <date>, <sender> wrote:" reply headers (handles multi-line wrapping)
+    .replace(/\r?\nOn [\s\S]*?wrote:\r?\n[\s\S]*/i, "")
+    // Strip Outlook-style "-----Original Message-----" and "From: ..." blocks
+    .replace(/\r?\n-{2,}\s*Original Message\s*-{2,}[\s\S]*/i, "")
+    .replace(/\r?\nFrom:\s.*[\s\S]*/i, "")
+    // Strip standard "-- " email signatures
+    .replace(/\r?\n-- \r?\n[\s\S]*/i, "")
+    // Remove any remaining ">" quoted lines
+    .split(/\r?\n/)
+    .filter((line) => !line.trim().startsWith(">"))
+    .join("\n")
+    .trim();
+}
+
 
 // ============================================================================
 // Pre-Approved AI Providers
@@ -175,8 +192,9 @@ export default {
     const rawSubject = parsedEmail.subject || "No Subject";
 
     const rawText = parsedEmail.text || "";
-    const latestReply = new EmailReplyParser().read(rawText).getVisibleText().trim();
+    const latestReply = stripQuotedText(rawText);
     let userText = latestReply || rawText.trim();
+
 
     // 3. Extract Inbound Attachments
     const { textAttachments, binaryAttachments } = extractAttachments(parsedEmail.attachments);
