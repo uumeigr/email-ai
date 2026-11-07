@@ -152,8 +152,13 @@ export default {
     const sender = message.from;
     const recipient = message.to;
 
-    // 1. Security & Infinite Loop Prevention
-    if (sender.toLowerCase() !== ALLOWED_SENDER.toLowerCase()) {
+    // 1. Security & Infinite Loop Prevention (supports comma-separated list in env)
+    const allowedSenders = (env.ALLOWED_SENDERS || "")
+      .split(",")
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean);
+
+    if (!allowedSenders.includes(sender.toLowerCase())) {
       console.warn(`Blocked unauthorised sender: ${sender}`);
       return;
     }
@@ -162,6 +167,7 @@ export default {
     if (sender === recipient || (autoSubmitted && autoSubmitted !== "no")) {
       return;
     }
+
 
     // 2. Parse Raw Email & Strip Quoted Thread History
     const rawEmail = await new Response(message.raw).arrayBuffer();
