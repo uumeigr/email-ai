@@ -311,9 +311,9 @@ export default {
     } else {
       msg.addMessage({
         contentType: "text/plain",
-        console.log("reply body text", replyBody);
         data: replyBody,
       });
+      console.log("reply body text", replyBody);
     }
 
     // 10. Send Outbound Email
