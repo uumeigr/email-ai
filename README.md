@@ -10,6 +10,8 @@ npx wrangler secret put GEMINI_API_KEY
 # Create Worker KV namespace, then bind it
 `EMAIL_MEMORY`
 
+# check worker log and also email routing activity log
+
 # Build var
 `EMAIL_MEMORY`  KV id
 
