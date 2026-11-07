@@ -1,0 +1,18 @@
+{
+  "name": "email",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "email-reply-parser": "^0.0.4",
+    "mimetext": "^3.0.27",
+    "postal-mime": "^2.4.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
