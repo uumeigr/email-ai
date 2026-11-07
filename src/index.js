@@ -81,7 +81,7 @@ function stripQuotedText(text) {
 
 const PROVIDERS = {
   llama: async (messages, binaryAttachments, env) => {
-    const res = await env.AI.run("@cf/meta-llama/llama-2-7b-chat-hf-lora", {
+    const res = await env.AI.run("@cf/mistral/mistral-7b-instruct-v0.2-lora", {
       messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
     });
     return res.response;
