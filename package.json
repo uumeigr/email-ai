@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "__remove_email-reply-parser": "^2.3.9"
+    "__remove_email-reply-parser_from_dependencies__": "^2.3.9"
   },
   "dependencies": {
     "mimetext": "^3.0.27",
