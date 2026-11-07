@@ -6,3 +6,5 @@
 npx wrangler secret put OPENAI_API_KEY
 npx wrangler secret put GEMINI_API_KEY
 ```
+
+# Create Worker KV namespace, then bind it
