@@ -15,10 +15,5 @@
   "ai": {
     "binding": "AI"
   },
-  "kv_namespaces": [
-    {
-      "binding": "EMAIL_MEMORY",
-      "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-    }
-  ]
+
 }
