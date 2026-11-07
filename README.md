@@ -14,5 +14,4 @@ npx wrangler secret put GEMINI_API_KEY
 `EMAIL_MEMORY`  KV id
 
 # Deploy command
-`node -e 'const fs=require("fs"),c=JSON.parse(fs.readFileSync("wrangler.jsonc","utf8").replace(/\/\/.*$/gm,""));c.kv_namespaces=[{binding:"EMAIL_MEMORY",id:process.env.KV_MEMORY_ID}];fs.writeFileSync("wrangler.deploy.json",JSON.stringify(c))' && npx wrangler deploy -c wrangler.deploy.json --keep-vars
-`
+`bun -e 'const c=Bun.JSONC.parse(await Bun.file("wrangler.jsonc").text());c.kv_namespaces=[{binding:"EMAIL_MEMORY",id:process.env.KV_MEMORY_ID}];await Bun.write("wrangler.deploy.json",JSON.stringify(c))' && npx wrangler deploy -c wrangler.deploy.json --keep-vars`
